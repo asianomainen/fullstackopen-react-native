@@ -1,15 +1,36 @@
-import { Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import RepositoryDetailsBar from './RepositoryDetailsBar'
+import RepositoryPicture from './RepositoryPicture'
+import RepositoryStatsBar from './RepositoryStatsBar'
 
 const RepositoryItem = ({ item }) => {
+  const styles = StyleSheet.create({
+    container: {
+      paddingTop: 10,
+      paddingLeft: 10,
+      backgroundColor: 'white',
+    },
+    details: {
+      flexDirection: 'row',
+    },
+  })
+
   return (
-    <View>
-      <Text>Full name: {item.fullName}</Text>
-      <Text>Description: {item.description}</Text>
-      <Text>Language: {item.language}</Text>
-      <Text>Stars: {item.stargazersCount}</Text>
-      <Text>Forks: {item.forksCount}</Text>
-      <Text>Reviews: {item.reviewCount}</Text>
-      <Text>Rating {item.ratingAverage}</Text>
+    <View style={styles.container}>
+      <View style={styles.details}>
+        <RepositoryPicture uri={item.ownerAvatarUrl} />
+        <RepositoryDetailsBar
+          name={item.fullName}
+          description={item.description}
+          language={item.language}
+        />
+      </View>
+      <RepositoryStatsBar
+        stars={item.stargazersCount}
+        forks={item.forksCount}
+        reviews={item.reviewCount}
+        rating={item.ratingAverage}
+      />
     </View>
   )
 }

@@ -61,6 +61,10 @@ const RepositoryList = () => {
 
   return (
     <FlatList
+      contentContainerStyle={{
+        display: 'flex',
+        flexGrow: 1,
+      }}
       data={repositories}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
