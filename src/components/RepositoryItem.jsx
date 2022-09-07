@@ -1,4 +1,6 @@
 import { StyleSheet, View } from 'react-native'
+
+import theme from '../theme'
 import RepositoryDetailsBar from './RepositoryDetailsBar'
 import RepositoryPicture from './RepositoryPicture'
 import RepositoryStatsBar from './RepositoryStatsBar'
@@ -8,7 +10,7 @@ const RepositoryItem = ({ item }) => {
     container: {
       paddingTop: 10,
       paddingLeft: 10,
-      backgroundColor: 'white',
+      backgroundColor: theme.colors.white,
     },
     details: {
       flexDirection: 'row',
