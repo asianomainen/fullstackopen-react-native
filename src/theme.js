@@ -5,6 +5,7 @@ const theme = {
     primary: '#0366d6',
     white: '#ffffff',
     gray: '#817f7e',
+    error: '#d73a4a',
     appBarBackground: '#24292e',
     mainBackground: '#e1e4e8',
   },
