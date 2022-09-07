@@ -14,17 +14,17 @@ const RepositoryDetailsBar = ({ name, description, language }) => {
       padding: 4,
       borderRadius: 3,
     },
-    boxes: {
+    box: {
       marginBottom: 6,
     },
   })
 
   return (
     <View style={styles.container}>
-      <Text style={styles.boxes} fontWeight="bold">
+      <Text style={styles.box} fontWeight="bold">
         {name}
       </Text>
-      <Text style={styles.boxes} color="textSecondary">
+      <Text style={styles.box} color="textSecondary">
         {description}
       </Text>
       <Text style={styles.languageBox} color="white">
