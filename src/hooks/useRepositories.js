@@ -6,12 +6,12 @@ import { GET_REPOSITORIES } from '../graphql/queries'
 const useRepositories = () => {
   const [repositories, setRepositories] = useState()
 
-  const { data } = useQuery(GET_REPOSITORIES, {
+  const { data, loading } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
     onCompleted: () => setRepositories(data.repositories),
   })
 
-  return repositories
+  return { repositories, loading }
 }
 
 export default useRepositories
