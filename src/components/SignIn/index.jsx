@@ -1,7 +1,7 @@
 import { Formik } from 'formik'
+import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
 import useSignIn from '../../hooks/useSignIn'
-import AuthStorage from '../../utils/authStorage'
 import SignInForm from './SignInForm'
 
 const initialValues = {
@@ -22,15 +22,14 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
   const [signIn] = useSignIn()
-  const authStorage = new AuthStorage()
+  const navigate = useNavigate()
 
   const onSubmit = async (values) => {
     const { username, password } = values
 
     try {
-      const { data } = await signIn({ username, password })
-      console.log('Result:', data)
-      await authStorage.setAccessToken(data.authenticate.accessToken)
+      await signIn({ username, password })
+      navigate('../', { replace: true })
     } catch (e) {
       console.log(e)
     }
