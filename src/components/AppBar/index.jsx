@@ -1,13 +1,11 @@
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import Constants from 'expo-constants'
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native'
-import { Link } from 'react-router-native'
 
 import { CURRENT_USER } from '../../graphql/queries'
-import useAuthStorage from '../../hooks/useAuthStorage'
 import theme from '../../theme'
-import Text from '../Text'
 import AppBarTab from './AppBarTab'
+import SignOutTab from './SignOutTab'
 
 const styles = StyleSheet.create({
   container: {
@@ -20,12 +18,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
   },
-  tabContainer: { padding: 10 },
 })
 
 const AppBar = () => {
-  const authStorage = useAuthStorage()
-  const apolloClient = useApolloClient()
   const user = useQuery(CURRENT_USER)
 
   if (user.loading) {
@@ -36,11 +31,6 @@ const AppBar = () => {
     )
   }
 
-  const handleSignOut = async () => {
-    await authStorage.removeAccessToken()
-    apolloClient.resetStore()
-  }
-
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
@@ -48,16 +38,7 @@ const AppBar = () => {
         {user.data.me === null ? (
           <AppBarTab text="Sign in" link="signin" />
         ) : (
-          <Link to="signout" onPress={handleSignOut}>
-            <Text
-              style={styles.tabContainer}
-              color="white"
-              fontSize="subheading"
-              fontWeight="bold"
-            >
-              Sign out
-            </Text>
-          </Link>
+          <SignOutTab />
         )}
       </ScrollView>
     </View>
