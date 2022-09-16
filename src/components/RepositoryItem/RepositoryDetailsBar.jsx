@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
-import theme from '../../../theme'
-import Text from '../../Text'
+import theme from '../../theme'
+import Text from '../Text'
 
 const RepositoryDetailsBar = ({ name, description, language }) => {
   const styles = StyleSheet.create({

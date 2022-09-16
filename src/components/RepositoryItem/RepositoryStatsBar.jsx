@@ -5,7 +5,6 @@ const RepositoryStatsBar = ({ stars, forks, reviews, rating }) => {
   const styles = StyleSheet.create({
     container: {
       padding: 5,
-      flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-around',
     },
