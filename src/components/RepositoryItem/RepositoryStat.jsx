@@ -12,7 +12,7 @@ const RepositoryStat = ({ stat, text }) => {
 
   if (stat > 1000) {
     //Round to one decimal point
-    stat = Math.round((stat / 1000) * 10) / 10
+    stat = Math.round(stat / 100) / 10
     return (
       <View style={styles.container}>
         <Text fontWeight="bold">{stat}k</Text>

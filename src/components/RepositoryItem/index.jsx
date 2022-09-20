@@ -7,34 +7,36 @@ import RepositoryDetailsBar from './RepositoryDetailsBar'
 import RepositoryPicture from './RepositoryPicture'
 import RepositoryStatsBar from './RepositoryStatsBar'
 
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 10,
+    paddingHorizontal: 10,
+    backgroundColor: theme.colors.white,
+  },
+  details: {
+    flexDirection: 'row',
+  },
+  button: {
+    padding: 15,
+    marginBottom: 15,
+    marginRight: 5,
+    marginLeft: 5,
+    borderRadius: 5,
+    backgroundColor: theme.colors.primary,
+    alignItems: 'center',
+  },
+})
+
+const onSubmit = (url) => {
+  Linking.openURL(url)
+}
+
 const RepositoryItem = ({ item }) => {
-  const styles = StyleSheet.create({
-    container: {
-      paddingTop: 10,
-      paddingLeft: 10,
-      paddingRight: 10,
-      backgroundColor: theme.colors.white,
-    },
-    details: {
-      flexDirection: 'row',
-    },
-    button: {
-      padding: 15,
-      marginBottom: 15,
-      marginRight: 5,
-      marginLeft: 5,
-      borderRadius: 5,
-      backgroundColor: theme.colors.primary,
-      alignItems: 'center',
-    },
-  })
-
-  const onSubmit = (url) => {
-    Linking.openURL(url)
-  }
-
   return (
-    <View testID="repositoryItem" style={styles.container}>
+    <View
+      testID="repositoryItem"
+      style={[styles.container, item.url && { marginBottom: 10 }]}
+    >
       <View style={styles.details}>
         <RepositoryPicture uri={item.ownerAvatarUrl} />
         <RepositoryDetailsBar

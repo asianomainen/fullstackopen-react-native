@@ -1,12 +1,14 @@
-import { useQuery } from '@apollo/client'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
-import { useParams } from 'react-router-native'
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native'
 
-import { SINGLE_REPOSITORY } from '../graphql/queries'
+import useSingleRepository from '../hooks/useSingleRepository'
 import theme from '../theme'
 import RepositoryItem from './RepositoryItem'
+import ReviewItem from './ReviewItem'
 
 const styles = StyleSheet.create({
+  separator: {
+    height: 10,
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -14,14 +16,13 @@ const styles = StyleSheet.create({
   },
 })
 
+const ItemSeparator = () => <View style={styles.separator} />
+
 const SingleRepository = () => {
-  let { repoId } = useParams()
+  const { repoData, repoLoading, repoReviews, reviewsLoading } =
+    useSingleRepository()
 
-  const { data, loading } = useQuery(SINGLE_REPOSITORY, {
-    variables: { repositoryId: repoId },
-  })
-
-  if (loading) {
+  if (repoLoading || reviewsLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={theme.colors.gray} />
@@ -29,10 +30,22 @@ const SingleRepository = () => {
     )
   }
 
+  const reviews = repoReviews
+    ? repoReviews.repository.reviews.edges.map((edge) => edge.node)
+    : []
+
   return (
-    <View>
-      <RepositoryItem item={data.repository} />
-    </View>
+    <FlatList
+      contentContainerStyle={{
+        display: 'flex',
+        flexGrow: 1,
+      }}
+      data={reviews}
+      keyExtractor={({ id }) => id}
+      renderItem={({ item }) => <ReviewItem review={item} />}
+      ListHeaderComponent={() => <RepositoryItem item={repoData.repository} />}
+      ItemSeparatorComponent={ItemSeparator}
+    />
   )
 }
 

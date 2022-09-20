@@ -27,6 +27,29 @@ export const SINGLE_REPOSITORY = gql`
   ${REPOSITORY_DETAILS}
 `
 
+export const REPOSITORY_REVIEWS = gql`
+  query ($repositoryId: ID!) {
+    repository(id: $repositoryId) {
+      id
+      fullName
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 export const CURRENT_USER = gql`
   query {
     me {

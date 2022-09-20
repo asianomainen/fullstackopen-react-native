@@ -7,9 +7,9 @@ import {
 } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
-import useRepositories from '../../hooks/useRepositories'
-import theme from '../../theme'
-import RepositoryItem from '../RepositoryItem'
+import useRepositories from '../hooks/useRepositories'
+import theme from '../theme'
+import RepositoryItem from './RepositoryItem'
 
 const styles = StyleSheet.create({
   separator: {
@@ -59,6 +59,7 @@ export const RepositoryListContainer = ({
         display: 'flex',
         flexGrow: 1,
       }}
+      keyExtractor={({ id }) => id}
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={(item) => renderItem(item, navigate)}
