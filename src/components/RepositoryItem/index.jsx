@@ -19,8 +19,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 15,
     marginBottom: 15,
-    marginRight: 5,
-    marginLeft: 5,
+    marginHorizontal: 5,
     borderRadius: 5,
     backgroundColor: theme.colors.primary,
     alignItems: 'center',

@@ -16,7 +16,7 @@ export const GET_REPOSITORIES = gql`
   ${REPOSITORY_DETAILS}
 `
 
-export const SINGLE_REPOSITORY = gql`
+export const GET_REPOSITORY = gql`
   query ($repositoryId: ID!) {
     repository(id: $repositoryId) {
       ...RepositoryDetails
