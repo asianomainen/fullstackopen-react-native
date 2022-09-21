@@ -36,7 +36,10 @@ const AppBar = () => {
       <ScrollView horizontal>
         <AppBarTab text="Repositories" link="/" />
         {user.data.me === null ? (
-          <AppBarTab text="Sign in" link="/signin" />
+          <>
+            <AppBarTab text="Sign in" link="/signin" />
+            <AppBarTab text="Sign up" link="/signup" />
+          </>
         ) : (
           <>
             <AppBarTab text="Create a review" link="/review" />
