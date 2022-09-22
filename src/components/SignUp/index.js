@@ -53,7 +53,7 @@ const SignUp = () => {
       await signIn(username, password)
       navigate('/', { replace: true })
     } catch (e) {
-      console.log(e)
+      window.alert(e.message)
     }
   }
 

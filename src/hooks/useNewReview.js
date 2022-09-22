@@ -7,7 +7,7 @@ const useNewReview = () => {
     refetchQueries: [{ query: GET_REPOSITORY }],
     onError: (error) => {
       if (error.graphQLErrors[0]) {
-        console.log(error.graphQLErrors[0].message)
+        throw error.graphQLErrors[0]
       }
     },
   })

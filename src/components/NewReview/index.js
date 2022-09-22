@@ -45,7 +45,7 @@ const NewReview = () => {
       const repoId = await createReview(owner, name, Number(rating), review)
       navigate(`/${repoId.data.createReview.repositoryId}`, { replace: true })
     } catch (e) {
-      console.log(e)
+      window.alert(e.message)
     }
   }
 
