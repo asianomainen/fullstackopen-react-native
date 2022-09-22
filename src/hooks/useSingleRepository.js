@@ -3,7 +3,7 @@ import { useParams } from 'react-router-native'
 import { GET_REPOSITORY, REPOSITORY_REVIEWS } from '../graphql/queries'
 
 const useSingleRepository = () => {
-  let { repoId } = useParams()
+  const { repoId } = useParams()
 
   const { data: repoData, loading: repoLoading } = useQuery(GET_REPOSITORY, {
     variables: { repositoryId: repoId },

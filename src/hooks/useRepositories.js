@@ -3,10 +3,11 @@ import { useState } from 'react'
 
 import { GET_REPOSITORIES } from '../graphql/queries'
 
-const useRepositories = () => {
+const useRepositories = (orderBy, orderDirection) => {
   const [repositories, setRepositories] = useState()
 
   const { data, loading } = useQuery(GET_REPOSITORIES, {
+    variables: { orderBy, orderDirection },
     fetchPolicy: 'cache-and-network',
     onCompleted: () => setRepositories(data.repositories),
   })
