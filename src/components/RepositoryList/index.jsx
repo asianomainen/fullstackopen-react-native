@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -7,11 +7,12 @@ import {
   View,
 } from 'react-native'
 import { useNavigate } from 'react-router-native'
+import { useDebounce } from 'use-debounce'
 
 import useRepositories from '../../hooks/useRepositories'
 import theme from '../../theme'
 import RepositoryItem from '../RepositoryItem'
-import FilterPicker from './FilterPicker'
+import ListHeader from './ListHeader'
 
 const styles = StyleSheet.create({
   separator: {
@@ -38,44 +39,55 @@ const renderItem = ({ item }, navigate) => {
   )
 }
 
-export const RepositoryListContainer = ({
-  repositories,
-  loading,
-  navigate,
-  sortBy,
-  setSortBy,
-}) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : []
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    const props = this.props
 
-  if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={theme.colors.gray} />
-      </View>
+      <ListHeader
+        sortBy={props.sortBy}
+        setSortBy={props.setSortBy}
+        filter={props.filter}
+        setFilter={props.setFilter}
+      />
     )
   }
 
-  return (
-    <FlatList
-      contentContainerStyle={{
-        display: 'flex',
-        flexGrow: 1,
-      }}
-      keyExtractor={({ id }) => id}
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={(item) => renderItem(item, navigate)}
-      ListHeaderComponent={
-        <FilterPicker sortBy={sortBy} setSortBy={setSortBy} />
-      }
-    />
-  )
+  render() {
+    const props = this.props
+
+    const repositoryNodes = props.repositories
+      ? props.repositories.edges.map((edge) => edge.node)
+      : []
+
+    if (props.loading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.gray} />
+        </View>
+      )
+    }
+
+    return (
+      <FlatList
+        contentContainerStyle={{
+          display: 'flex',
+          flexGrow: 1,
+        }}
+        keyExtractor={({ id }) => id}
+        data={repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={(item) => renderItem(item, props.navigate)}
+        ListHeaderComponent={this.renderHeader}
+      />
+    )
+  }
 }
 
 const RepositoryList = () => {
   const [sortBy, setSortBy] = useState('latest')
+  const [filter, setFilter] = useState('')
+  const [filterKeyword] = useDebounce(filter, 500)
 
   let orderBy = 'CREATED_AT'
   let orderDirection = 'DESC'
@@ -91,7 +103,11 @@ const RepositoryList = () => {
     orderDirection = 'ASC'
   }
 
-  const { repositories, loading } = useRepositories(orderBy, orderDirection)
+  const { repositories, loading } = useRepositories(
+    orderBy,
+    orderDirection,
+    filterKeyword
+  )
   const navigate = useNavigate()
 
   return (
@@ -101,6 +117,8 @@ const RepositoryList = () => {
       navigate={navigate}
       sortBy={sortBy}
       setSortBy={setSortBy}
+      filter={filter}
+      setFilter={setFilter}
     />
   )
 }

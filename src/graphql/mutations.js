@@ -9,7 +9,7 @@ export const SIGN_IN = gql`
 `
 
 export const CREATE_REVIEW = gql`
-  mutation Mutation($review: CreateReviewInput) {
+  mutation CreateReview($review: CreateReviewInput) {
     createReview(review: $review) {
       repositoryId
     }
@@ -17,7 +17,7 @@ export const CREATE_REVIEW = gql`
 `
 
 export const CREATE_USER = gql`
-  mutation Mutation($user: CreateUserInput) {
+  mutation CreateUser($user: CreateUserInput) {
     createUser(user: $user) {
       id
       username
