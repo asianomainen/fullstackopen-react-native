@@ -34,7 +34,7 @@ const handlePress = ({ item }, navigate) => {
 const renderItem = ({ item }, navigate) => {
   return (
     <Pressable onPress={() => handlePress({ item }, navigate)}>
-      <RepositoryItem item={item} />
+      <RepositoryItem item={item} navigate={navigate} />
     </Pressable>
   )
 }
@@ -78,6 +78,8 @@ export class RepositoryListContainer extends React.Component {
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         renderItem={(item) => renderItem(item, props.navigate)}
+        onEndReached={props.onEndReach}
+        onEndReachedThreshold={0.5}
         ListHeaderComponent={this.renderHeader}
       />
     )
@@ -103,12 +105,17 @@ const RepositoryList = () => {
     orderDirection = 'ASC'
   }
 
-  const { repositories, loading } = useRepositories(
+  const { repositories, loading, fetchMore } = useRepositories({
+    first: 8,
     orderBy,
     orderDirection,
-    filterKeyword
-  )
+    filterKeyword,
+  })
   const navigate = useNavigate()
+
+  const onEndReach = () => {
+    fetchMore()
+  }
 
   return (
     <RepositoryListContainer
@@ -119,6 +126,7 @@ const RepositoryList = () => {
       setSortBy={setSortBy}
       filter={filter}
       setFilter={setFilter}
+      onEndReach={onEndReach}
     />
   )
 }

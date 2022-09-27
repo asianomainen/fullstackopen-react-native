@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />
 
 const SingleRepository = () => {
-  const { repoData, repoLoading, repoReviews, reviewsLoading } =
-    useSingleRepository()
+  const { repoData, repoLoading, repoReviews, reviewsLoading, fetchMore } =
+    useSingleRepository({ first: 8 })
 
   if (repoLoading || reviewsLoading) {
     return (
@@ -28,6 +28,10 @@ const SingleRepository = () => {
         <ActivityIndicator size="large" color={theme.colors.gray} />
       </View>
     )
+  }
+
+  const onEndReach = () => {
+    fetchMore()
   }
 
   const reviews = repoReviews
@@ -42,9 +46,11 @@ const SingleRepository = () => {
       }}
       data={reviews}
       keyExtractor={({ id }) => id}
-      renderItem={({ item }) => <ReviewItem review={item} />}
+      renderItem={({ item }) => <ReviewItem review={item} buttons={false} />}
       ListHeaderComponent={() => <RepositoryItem item={repoData.repository} />}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   )
 }

@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import Constants from 'expo-constants'
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native'
 
-import { CURRENT_USER } from '../../graphql/queries'
+import { GET_CURRENT_USER } from '../../graphql/queries'
 import theme from '../../theme'
 import AppBarTab from './AppBarTab'
 import SignOutTab from './SignOutTab'
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 })
 
 const AppBar = () => {
-  const user = useQuery(CURRENT_USER)
+  const user = useQuery(GET_CURRENT_USER)
 
   if (user.loading) {
     return (
@@ -43,6 +43,7 @@ const AppBar = () => {
         ) : (
           <>
             <AppBarTab text="Create a review" link="/review" />
+            <AppBarTab text="My reviews" link="/myreviews" />
             <SignOutTab />
           </>
         )}
